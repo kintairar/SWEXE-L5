@@ -9,13 +9,13 @@ class TweetsController < ApplicationController
     
     def create
         t = Tweet.new(message: params[:tweet][:message])
-        t.user = User.first
+        t.user = User.find_by(uid: session[:login_uid])
         t.save
         redirect_to tweets_path
     end
     
     def destroy
-        User.find(params[:id]).destroy
+        Tweet.find(params[:id]).destroy
         redirect_to tweets_path
     end
 end
